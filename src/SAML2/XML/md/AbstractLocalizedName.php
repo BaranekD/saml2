@@ -117,6 +117,6 @@ abstract class AbstractLocalizedName extends AbstractMdElement
      */
     public function toArray(): array
     {
-        return [$this->language => $this->getContent()];
+        return [$this->language => $this->content];
     }
 }

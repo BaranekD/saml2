@@ -52,7 +52,7 @@ abstract class AbstractLocalizedName extends AbstractMdElement
      * @throws \Exception on failure
      * @return void
      */
-    protected function validateContent(/** @scrutinizer ignore-unused */ string $content): void
+    protected function validateContent(string $content): void
     {
         Assert::notEmpty($content);
     }
@@ -82,27 +82,6 @@ abstract class AbstractLocalizedName extends AbstractMdElement
 
 
     /**
-     * Create an instance of this object from its XML representation.
-     *
-     * @param \DOMElement $xml
-     * @return static
-     *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException if the qualified name of the supplied element is wrong
-     */
-    public static function fromXML(DOMElement $xml): object
-    {
-        Assert::same($xml->localName, static::getLocalName(), InvalidDOMElementException::class);
-        Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
-        Assert::true(
-            $xml->hasAttributeNS(self::XML_NS, 'lang'),
-            'Missing xml:lang from ' . static::getLocalName()
-        );
-
-        return new static($xml->getAttributeNS(self::XML_NS, 'lang'), $xml->textContent);
-    }
-
-
-    /**
      * @param \DOMElement|null $parent
      * @return \DOMElement
      */
@@ -110,7 +89,7 @@ abstract class AbstractLocalizedName extends AbstractMdElement
     {
         $e = $this->instantiateParentElement($parent);
         $e->setAttributeNS(self::XML_NS, 'xml:lang', $this->language);
-        $e->textContent = $this->getContent();
+        $e->textContent = $this->content;
 
         return $e;
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\Test\SAML2\XML\saml;
+namespace SimpleSAML\Test\SAML2\XML\md;
 
 use DOMDocument;
 use InvalidArgumentException;

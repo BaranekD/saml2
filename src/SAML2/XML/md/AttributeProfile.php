@@ -29,22 +29,4 @@ final class AttributeProfile extends AbstractMdElement
     {
         Assert::notEmpty($content, 'AttributeProfile cannot be empty');
     }
-
-
-    /**
-     * Convert XML into a AttributeProfile
-     *
-     * @param \DOMElement $xml The XML element we should load
-     * @return self
-     *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
-     *   If the qualified name of the supplied element is wrong
-     */
-    public static function fromXML(DOMElement $xml): object
-    {
-        Assert::same($xml->localName, 'AttributeProfile', InvalidDOMElementException::class);
-        Assert::same($xml->namespaceURI, AttributeProfile::NS, InvalidDOMElementException::class);
-
-        return new self($xml->textContent);
-    }
 }

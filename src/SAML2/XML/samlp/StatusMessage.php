@@ -30,23 +30,5 @@ final class StatusMessage extends AbstractSamlpElement
     {
         Assert::notWhitespaceOnly($content);
     }
-
-
-    /**
-     * Convert XML into an StatusMessage
-     *
-     * @param \DOMElement $xml The XML element we should load
-     * @return self
-     *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
-     *   If the qualified name of the supplied element is wrong
-     */
-    public static function fromXML(DOMElement $xml): object
-    {
-        Assert::same($xml->localName, 'StatusMessage', InvalidDOMElementException::class);
-        Assert::same($xml->namespaceURI, StatusMessage::NS, InvalidDOMElementException::class);
-
-        return new self($xml->textContent);
-    }
 }
 

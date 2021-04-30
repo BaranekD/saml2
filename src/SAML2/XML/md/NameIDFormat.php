@@ -30,23 +30,5 @@ final class NameIDFormat extends AbstractMdElement
     {
         Assert::notWhitespaceOnly($content);
     }
-
-
-    /**
-     * Convert XML into an NameIDFormat
-     *
-     * @param \DOMElement $xml The XML element we should load
-     * @return self
-     *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
-     *   If the qualified name of the supplied element is wrong
-     */
-    public static function fromXML(DOMElement $xml): object
-    {
-        Assert::same($xml->localName, 'NameIDFormat', InvalidDOMElementException::class);
-        Assert::same($xml->namespaceURI, NameIDFormat::NS, InvalidDOMElementException::class);
-
-        return new self($xml->textContent);
-    }
 }
 

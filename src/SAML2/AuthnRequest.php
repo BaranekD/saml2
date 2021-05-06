@@ -9,7 +9,6 @@ use DOMElement;
 use RobRichards\XMLSecLibs\XMLSecEnc;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
 use Webmozart\Assert\Assert;
-
 use SAML2\XML\saml\NameID;
 use SAML2\XML\saml\SubjectConfirmation;
 use SAML2\Exception\InvalidArgumentException;
@@ -132,6 +131,8 @@ class AuthnRequest extends Request
      */
     private $nameId = null;
 
+    private $idpHint;
+
 
     /**
      * Constructor for SAML 2 authentication request messages.
@@ -146,6 +147,8 @@ class AuthnRequest extends Request
         if ($xml === null) {
             return;
         }
+
+//        $xml->setAttribute('aarc_idp_hint', 'https://idp2.ics.muni.cz/idp/shibboleth?aarc_idp_hint=https://test.com');
 
         $this->forceAuthn = Utils::parseBoolean($xml, 'ForceAuthn', false);
         $this->isPassive = Utils::parseBoolean($xml, 'IsPassive', false);
@@ -168,6 +171,10 @@ class AuthnRequest extends Request
 
         if ($xml->hasAttribute('ProviderName')) {
             $this->ProviderName = $xml->getAttribute('ProviderName');
+        }
+
+        if ($xml->hasAttribute('aarc_idp_hint')) {
+            $this->idpHint = $xml->getAttribute('aarc_idp_hint');
         }
 
         $this->parseSubject($xml);
@@ -930,5 +937,21 @@ class AuthnRequest extends Request
 
             Utils::addStrings($ar, Constants::NS_SAML, 'saml:Audience', false, $this->getAudiences());
         }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIdpHint(): ?string
+    {
+        return $this->idpHint;
+    }
+
+    /**
+     * @param string $idpHint
+     */
+    public function setIdpHint(string $idpHint): void
+    {
+        $this->idpHint = $idpHint;
     }
 }
